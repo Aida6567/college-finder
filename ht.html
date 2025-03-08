@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url(e:\aida\abbas-tehrani-q1phKCD0vRc-unsplash.jpg) no-repeat center center/cover;
+            color: white;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            margin: 50px auto;
+            width: 80%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .filters select, .filters input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background: orange;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        a {
+            color: orange;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Find Colleges</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Find Your Dream College</h1>
+        <p>Search colleges by course & location</p>
+
+        <div class="filters">
+            <select id="course">
+                <option value="">Select Course</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Medical">Medical</option>
+                <option value="Arts">Arts</option>
+                <option value="Commerce">Commerce</option>
+            </select>
+
+            <input type="text" id="location" placeholder="Enter Location">
+            <button onclick="searchColleges()">Search</button>
+        </div>
+
+        <ul id="college-list"></ul>
+    </div>
+
+    <script>
+        const colleges = [
+            { name: "IIT Bombay", website: "https://www.iitb.ac.in", location: "Mumbai", course: "Engineering" },
+            { name: "IIT Delhi", website: "https://home.iitd.ac.in", location: "Delhi", course: "Engineering" },
+            { name: "IISc Bangalore", website: "https://www.iisc.ac.in", location: "Bangalore", course: "Engineering" },
+            { name: "AIIMS Delhi", website: "https://www.aiims.edu", location: "Delhi", course: "Medical" },
+            { name: "Jadavpur University", website: "https://www.jaduniv.edu.in", location: "Kolkata", course: "Arts" },
+            { name: "University of Delhi", website: "https://www.du.ac.in", location: "Delhi", course: "Commerce" }
+        ];
+
+        function searchColleges() {
+            const course = document.getElementById("course").value;
+            const location = document.getElementById("location").value.toLowerCase();
+            const collegeList = document.getElementById("college-list");
+            collegeList.innerHTML = "";
+
+            const filteredColleges = colleges.filter(college =>
+                (course === "" || college.course === course) &&
+                (location === "" || college.location.toLowerCase().includes(location))
+            );
+
+            if (filteredColleges.length === 0) {
+                collegeList.innerHTML = "<li>No colleges found.</li>";
+                return;
+            }
+
+            filteredColleges.forEach(college => {
+                const li = document.createElement("li");
+                li.innerHTML = <a href="${college.website}" target="_blank">${college.name} - ${college.location}</a>;
+                collegeList.appendChild(li);
+            });
+        }
+    </script>
+
+</body>
+</html>
